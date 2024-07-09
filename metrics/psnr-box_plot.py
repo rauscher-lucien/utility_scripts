@@ -58,26 +58,32 @@ def plot_psnr_scores_boxplot_with_half_box_and_scatter(all_psnr_scores, labels, 
     plt.ylabel('PSNR Score (dB)')
     plt.grid(True)
     
-    plot_filename = 'psnr_scores-nema-diff_non-DL_methods.png'
+    plot_filename = 'psnr_scores-nema-compare_all_methods-1.png'
     plt.savefig(os.path.join(output_dir, plot_filename), bbox_inches='tight')
     plt.close()
     print(f"PSNR scores box plot with scatter saved to {os.path.join(output_dir, plot_filename)}")
 
 if __name__ == "__main__":
-    output_dir = r"C:\Users\rausc\Documents\EMBL\data\mouse-results"
-    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour-average-10.TIFF"
+    output_dir = r"C:\Users\rausc\Documents\EMBL\data\nema-results"
+    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\nema-results\nema_avg_40.TIFF"
     denoised_files = [
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_binned_2x2.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_binned_3x3.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_binned_4x4.TIFF"
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_gaussian_2.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_nlm_h1.4_ps4_pd20.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\output_stack-Nema_B-test_3-Nematostella_B-epoch501.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\output_stack-big_data_small-no_nema-no_droso-test_1-Nematostella_B-epoch547.TIFF"
 
         # Add more file paths as needed
     ]
     
     custom_labels = [
-        "2x2",
-        "3x3",
-        "4x4"
+        "noisy",
+        "gauss",
+        "NLM",
+        "BM3D",
+        "single",
+        "general"
         # Add more custom labels as needed
     ]
     
@@ -91,7 +97,3 @@ if __name__ == "__main__":
         all_psnr_scores.append(psnr_scores)
 
     plot_psnr_scores_boxplot_with_half_box_and_scatter(all_psnr_scores, custom_labels, output_dir)
-
-
-
-

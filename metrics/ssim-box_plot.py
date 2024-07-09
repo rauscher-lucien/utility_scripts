@@ -58,26 +58,30 @@ def plot_ssim_scores_boxplot_with_half_box_and_scatter(all_ssim_scores, labels, 
     plt.ylabel('SSIM Score (dB)')
     plt.grid(True)
     
-    plot_filename = 'ssim_scores-mouse-final.png'
+    plot_filename = 'ssim_scores-nema-compare_all_methods-1.png'
     plt.savefig(os.path.join(output_dir, plot_filename), bbox_inches='tight')
     plt.close()
     print(f"SSIM scores box plot with scatter saved to {os.path.join(output_dir, plot_filename)}")
 
 if __name__ == "__main__":
-    output_dir = r"C:\Users\rausc\Documents\EMBL\data\mouse-results"
-    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour-average-10.TIFF"
+    output_dir = r"C:\Users\rausc\Documents\EMBL\data\nema-results"
+    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\nema-results\nema_avg_40.TIFF"
     denoised_files = [
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\output_stack-mouse_embryo-test_1-mouse_embryo-epoch534.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results-generalized\output_stack-big_data_small-no_nema-no_droso-test_1-mouse_embryo-epoch547.TIFF"
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_gaussian_2.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_nlm_h1.4_ps4_pd20.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\output_stack-Nema_B-test_3-Nematostella_B-epoch501.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\output_stack-big_data_small-no_nema-no_droso-test_1-Nematostella_B-epoch547.TIFF"
 
         # Add more file paths as needed
     ]
     
     custom_labels = [
         "noisy",
-        "bm3d",
+        "gauss",
+        "NLM",
+        "BM3D",
         "single",
         "general"
         # Add more custom labels as needed

@@ -63,7 +63,7 @@ def plot_psnr_scores_boxplot_with_half_box_and_scatter(all_psnr_scores, labels, 
     plt.ylabel('PSNR Score (dB)')
     plt.grid(True)
     
-    plot_filename = 'psnr_scores_comparison-nlm.png'
+    plot_filename = 'psnr_scores_comparison-gauss_2.png'
     plt.savefig(os.path.join(output_dir, plot_filename), bbox_inches='tight')
     plt.close()
     print(f"PSNR scores box plot with scatter saved to {os.path.join(output_dir, plot_filename)}")
@@ -77,9 +77,9 @@ if __name__ == "__main__":
         # Add more ground truth file paths as needed
     ]
     denoised_files = [
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_nlm_h1.4_ps4_pd20.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1_filtered_nlm_h1.4_ps4_pd20.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered_nlm_h1.4_ps4_pd20.TIFF"
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_gaussian_2.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1_filtered_gaussian_2.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered_gaussian_2.TIFF"
         # Add more denoised file paths as needed
     ]
     

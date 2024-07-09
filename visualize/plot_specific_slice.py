@@ -41,8 +41,8 @@ def plot_and_save_slice_from_tiff(stack_path, slice_index):
     print(f"Slice {slice_index} has been saved to {output_path}")
 
 # Example usage
-stack_path = r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1_filtered_gaussian_2.TIFF"
-slice_index = 95  # Specify the desired slice index here
+stack_path = r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_nlm_h1.4_ps4_pd20.TIFF"
+slice_index = 80  # Specify the desired slice index here
 plot_and_save_slice_from_tiff(stack_path, slice_index)
 
 
