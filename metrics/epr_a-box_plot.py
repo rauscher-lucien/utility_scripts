@@ -68,21 +68,22 @@ def plot_epr_a_scores_boxplot_with_half_box_and_scatter(all_epr_a_scores, labels
     plt.ylabel('EPRa Score')
     plt.grid(True)
     
-    plot_filename = 'epr_a_scores-nema-compare_all_methods-1.png'
+    plot_filename = 'epr_a_scores-droso-compare_all_methods-1.png'
     plt.savefig(os.path.join(output_dir, plot_filename), bbox_inches='tight')
     plt.close()
     print(f"EPRa scores box plot with scatter saved to {os.path.join(output_dir, plot_filename)}")
 
 if __name__ == "__main__":
-    output_dir = r"C:\Users\rausc\Documents\EMBL\data\nema-results"
-    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\nema-results\nema_avg_40.TIFF"
-    distorted_files = [
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_gaussian_2.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_nlm_h1.4_ps4_pd20.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\output_stack-Nema_B-test_3-Nematostella_B-epoch501.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\output_stack-big_data_small-no_nema-no_droso-test_1-Nematostella_B-epoch547.TIFF"
+    output_dir = r"C:\Users\rausc\Documents\EMBL\data\mouse-results"
+    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour-average-10.TIFF"
+    denoised_files = [
+        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered_gaussian_2.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered_nlm_h1.4_ps4_pd20.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\output_stack-mouse_embryo-test_1-mouse_embryo-epoch534.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\output_stack-big_data_small-no_nema-no_droso-test_1-mouse_embryo-epoch547.TIFF"
+
 
         # Add more file paths as needed
     ]
@@ -90,19 +91,19 @@ if __name__ == "__main__":
     custom_labels = [
         "noisy",
         "gauss",
-        "NLM",
-        "BM3D",
+        "nlm",
+        "bm3d",
         "single",
         "general"
         # Add more custom labels as needed
     ]
     
-    if len(custom_labels) != len(distorted_files):
+    if len(custom_labels) != len(denoised_files):
         raise ValueError("The number of custom labels must match the number of distorted files.")
     
     all_epr_a_scores = []
     
-    for distorted_stack_path in distorted_files:
+    for distorted_stack_path in denoised_files:
         epr_a_scores = calculate_epr(ground_truth_path, distorted_stack_path)
         all_epr_a_scores.append(epr_a_scores)
 

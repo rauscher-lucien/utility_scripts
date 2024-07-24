@@ -58,7 +58,7 @@ def plot_nrmse_scores_boxplot_with_half_box_and_scatter(all_nrmse_scores, labels
     plt.ylabel('NRMSE Score')
     plt.grid(True)
     
-    plot_filename = 'nrmse_scores-nema-compare_all_methods-1.png'
+    plot_filename = 'nrmse_scores-nema-final-1.png'
     plt.savefig(os.path.join(output_dir, plot_filename), bbox_inches='tight')
     plt.close()
     print(f"NRMSE scores box plot with scatter saved to {os.path.join(output_dir, plot_filename)}")
@@ -67,23 +67,30 @@ if __name__ == "__main__":
     output_dir = r"C:\Users\rausc\Documents\EMBL\data\nema-results"
     ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\nema-results\nema_avg_40.TIFF"
     denoised_files = [
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_gaussian_2.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_nlm_h1.4_ps4_pd20.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\output_stack-Nema_B-test_3-Nematostella_B-epoch501.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\output_stack-big_data_small-no_nema-no_droso-test_1-Nematostella_B-epoch547.TIFF"
+        r"C:\Users\rausc\Documents\EMBL\data\final-nema-results\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_1_Nematostella_B_model_nameUNet3_UNet_base16_num_epoch10000_batch_size8_lr1e-05-epoch9470.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\final-nema-results\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_1_Nematostella_B_model_nameUNet3_UNet_base32_num_epoch10000_batch_size8_lr1e-05-epoch9970.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\final-nema-results\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_1_Nematostella_B_model_nameUNet3_UNet_base64_num_epoch10000_batch_size8_lr1e-05-epoch9450.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\final-nema-results\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_1_Nematostella_B_model_nameUNet4_UNet_base16_num_epoch10000_batch_size8_lr1e-05-epoch9440.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\final-nema-results\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_1_Nematostella_B_model_nameUNet4_UNet_base32_num_epoch10000_batch_size8_lr1e-05-epoch9950.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\final-nema-results\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_1_Nematostella_B_model_nameUNet4_UNet_base64_num_epoch10000_batch_size8_lr1e-05-epoch9850.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\final-nema-results\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_1_Nematostella_B_model_nameUNet5_UNet_base16_num_epoch10000_batch_size8_lr1e-05-epoch7200.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\final-nema-results\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_1_Nematostella_B_model_nameUNet5_UNet_base32_num_epoch10000_batch_size8_lr1e-05-epoch5350.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\final-nema-results\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_1_Nematostella_B_model_nameUNet5_UNet_base64_num_epoch10000_batch_size8_lr1e-05-epoch9750.TIFF",
+
 
         # Add more file paths as needed
     ]
     
     custom_labels = [
-        "noisy",
-        "gauss",
-        "NLM",
-        "BM3D",
-        "single",
-        "general"
+        "3 16",
+        "3 32",
+        "3 64",
+        "4 16",
+        "4 32",
+        "4 64",
+        "5 16",
+        "5 32",
+        "5 64"
         # Add more custom labels as needed
     ]
     
@@ -97,3 +104,78 @@ if __name__ == "__main__":
         all_nrmse_scores.append(nrmse_scores)
 
     plot_nrmse_scores_boxplot_with_half_box_and_scatter(all_nrmse_scores, custom_labels, output_dir)
+
+
+    # output_dir = r"C:\Users\rausc\Documents\EMBL\data\nema-results"
+    # ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\nema-results\nema_avg_40.TIFF"
+    # denoised_files = [
+    #     r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_gaussian_2.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_nlm_h1.4_ps4_pd20.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\nema-results\output_stack-Nema_B-test_3-Nematostella_B-epoch501.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\nema-results\output_stack-big_data_small-no_nema-no_droso-test_1-Nematostella_B-epoch547.TIFF"
+
+    #     # Add more file paths as needed
+    # ]
+    
+    # custom_labels = [
+    #     "noisy",
+    #     "gauss",
+    #     "NLM",
+    #     "BM3D",
+    #     "single",
+    #     "general"
+    #     # Add more custom labels as needed
+    # ]
+
+
+    # output_dir = r"C:\Users\rausc\Documents\EMBL\data\droso-results"
+    # ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\droso-results\droso_good_avg_40-offset-2.TIFF"
+    # denoised_files = [
+    #     r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1_filtered_gaussian_2.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1_filtered_nlm_h1.4_ps4_pd20.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1_filtered.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\droso-results\output_stack-droso_good-test_1-droso_good-epoch503.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\droso-results\output_stack-big_data_small-no_nema-no_droso-test_1-droso_good-epoch547.TIFF"
+
+
+    #     # Add more file paths as needed
+    # ]
+    
+    # custom_labels = [
+    #     "noisy",
+    #     "gauss",
+    #     "nlm",
+    #     "bm3d",
+    #     "single",
+    #     "general"
+    #     # Add more custom labels as needed
+    # ]
+
+
+
+    # output_dir = r"C:\Users\rausc\Documents\EMBL\data\mouse-results"
+    # ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour-average-10.TIFF"
+    # denoised_files = [
+    #     r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered_gaussian_2.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered_nlm_h1.4_ps4_pd20.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\mouse-results\output_stack-mouse_embryo-test_1-mouse_embryo-epoch534.TIFF",
+    #     r"C:\Users\rausc\Documents\EMBL\data\mouse-results\output_stack-big_data_small-no_nema-no_droso-test_1-mouse_embryo-epoch547.TIFF"
+
+
+    #     # Add more file paths as needed
+    # ]
+    
+    # custom_labels = [
+    #     "noisy",
+    #     "gauss",
+    #     "nlm",
+    #     "bm3d",
+    #     "single",
+    #     "general"
+    #     # Add more custom labels as needed
+    # ]

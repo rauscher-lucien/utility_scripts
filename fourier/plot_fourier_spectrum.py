@@ -104,8 +104,8 @@ def save_fourier_spectrum(image_path, species_name, slice_index=None, freq_range
     plot_and_save_fourier_spectrum(magnitude_spectrum, output_dir, species_name, image_path, slice_index, freq_range, log_scale, clip_range, save_plot)
 
 # Example usage
-image_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\output_stack-big_data_small-no_nema-no_droso-test_1-mouse_embryo-epoch547.TIFF"
-species_name = "ME-denoised-general"
+image_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered_nlm_h1.4_ps4_pd20.TIFF"
+species_name = "ME-denoised-nlm_4_20"
 log_scale = True  # Example to enable log scale
 freq_range = None  # Example frequency range (can be None for full spectrum)
 clip_range = (0.0, 0.4)  # Example clip range

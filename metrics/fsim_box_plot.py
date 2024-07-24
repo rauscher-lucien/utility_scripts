@@ -75,7 +75,7 @@ def calculate_fsim_for_stacks(ground_truth_path, denoised_stack_path):
     return fsim_scores
 
 def plot_fsim_scores_boxplot_with_half_box_and_scatter(all_fsim_scores, labels, output_dir):
-    plt.figure(figsize=(15, 10))  # Increased the height to make the plot longer vertically
+    plt.figure(figsize=(10, 15))  # Increased the height to make the plot longer vertically
     
     positions = np.arange(len(all_fsim_scores))
     
@@ -96,25 +96,33 @@ def plot_fsim_scores_boxplot_with_half_box_and_scatter(all_fsim_scores, labels, 
     plt.ylabel('FSIM Score')
     plt.grid(True)
     
-    plot_filename = 'fsim_scores.png'
+    plot_filename = 'fsim_scores-droso-compare-all_methods-1.png'
     plt.savefig(os.path.join(output_dir, plot_filename), bbox_inches='tight')
     plt.close()
     print(f"FSIM scores box plot with scatter saved to {os.path.join(output_dir, plot_filename)}")
 
 if __name__ == "__main__":
-    output_dir = r"C:\Users\rausc\Documents\EMBL\data\test_1"
-    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\test_1\nema_avg_40.TIFF"
+    output_dir = r"C:\Users\rausc\Documents\EMBL\data\droso-results"
+    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\droso-results\droso_good_avg_40-offset-2.TIFF"
     denoised_files = [
-        r"C:\Users\rausc\Documents\EMBL\data\test_1\Nematostella_B_V0.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\test_1\Nematostella_B_V0_filtered.TIFF",
-        r"Z:\members\Rauscher\projects\one_adj_slice\big_data_small-no_nema-no_droso-test_1\results\Nematostella_B\output_stack-big_data_small-no_nema-no_droso-test_1-Nematostella_B-epoch547.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1_filtered_gaussian_2.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1_filtered_nlm_h1.4_ps4_pd20.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1_filtered.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\droso-results\output_stack-droso_good-test_1-droso_good-epoch503.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\droso-results\output_stack-big_data_small-no_nema-no_droso-test_1-droso_good-epoch547.TIFF"
+
+
         # Add more file paths as needed
     ]
     
     custom_labels = [
         "noisy",
-        "filtered",
-        "network",
+        "gauss",
+        "nlm",
+        "bm3d",
+        "single",
+        "general"
         # Add more custom labels as needed
     ]
     
