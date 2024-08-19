@@ -51,7 +51,7 @@ def calculate_epr(ground_truth_path, distorted_stack_path, sigma=1.0):
     return epr_a_scores
 
 def plot_epr_a_scores_boxplot_with_half_box_and_scatter(all_epr_a_scores, labels, output_dir):
-    plt.figure(figsize=(10, 15))
+    plt.figure(figsize=(15, 10))
     positions = np.arange(len(all_epr_a_scores))
     
     for i, epr_scores in enumerate(all_epr_a_scores):
@@ -68,33 +68,41 @@ def plot_epr_a_scores_boxplot_with_half_box_and_scatter(all_epr_a_scores, labels
     plt.ylabel('EPRa Score')
     plt.grid(True)
     
-    plot_filename = 'epr_a_scores-droso-compare_all_methods-1.png'
-    plt.savefig(os.path.join(output_dir, plot_filename), bbox_inches='tight')
+    plot_filename = 'epr_a_scores-nema-general-1.png'
+    plot_path = os.path.join(output_dir, plot_filename)
+    plt.savefig(plot_path, bbox_inches='tight')
     plt.close()
-    print(f"EPRa scores box plot with scatter saved to {os.path.join(output_dir, plot_filename)}")
+    print(f"EPRa scores box plot with scatter saved to {plot_path}")
+    
+    # Save mean EPRa and standard deviation to a text file
+    text_filename = plot_filename.replace('.png', '.txt')
+    text_path = os.path.join(output_dir, text_filename)
+    
+    with open(text_path, 'w') as f:
+        for label, epr_scores in zip(labels, all_epr_a_scores):
+            mean_epr = np.mean(epr_scores)
+            std_epr = np.std(epr_scores)
+            f.write(f"Label: {label}\n")
+            f.write(f"Mean EPRa: {mean_epr}\n")
+            f.write(f"Standard Deviation: {std_epr}\n")
+            f.write("\n")
+    
+    print(f"Mean EPRa and standard deviation details saved to {text_path}")
 
 if __name__ == "__main__":
-    output_dir = r"C:\Users\rausc\Documents\EMBL\data\mouse-results"
-    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour-average-10.TIFF"
+    output_dir = r"C:\Users\rausc\Documents\EMBL\data\nema-results"
+    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B-average-100.TIFF"
     denoised_files = [
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered_gaussian_2.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered_nlm_h1.4_ps4_pd20.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\output_stack-mouse_embryo-test_1-mouse_embryo-epoch534.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\mouse-results\output_stack-big_data_small-no_nema-no_droso-test_1-mouse_embryo-epoch547.TIFF"
-
-
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered_bm3d_sigma_0.09.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-general\2D-N2N-general_output_stack-Nematostella_B-project-test_2_big_data_small_2_model_nameUNet4_UNet_base32_num_epoch1000_batch_size8_lr1e-05_patience50-epoch506.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results-3D-N2N-general\3D-N2N-general_output_stack-nema-project-test_1_big_data_small_2_model_nameUNet4_UNet_base32_stack_depth32_num_epoch1000_batch_size8_lr1e-05_patience50-epoch435.TIFF"
         # Add more file paths as needed
     ]
     
     custom_labels = [
-        "noisy",
-        "gauss",
-        "nlm",
-        "bm3d",
-        "single",
-        "general"
+        "BM3D 0.09",
+        "2D-N2N general 4 32",
+        "3D-N2N general 4 32"
         # Add more custom labels as needed
     ]
     
@@ -108,3 +116,4 @@ if __name__ == "__main__":
         all_epr_a_scores.append(epr_a_scores)
 
     plot_epr_a_scores_boxplot_with_half_box_and_scatter(all_epr_a_scores, custom_labels, output_dir)
+

@@ -69,11 +69,11 @@ def save_filtered_stack(filtered_stack, input_path, h, patch_size, patch_distanc
 
 if __name__ == "__main__":
     # Define input parameters and paths
-    data_path = r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0.TIFF"
-    h = 1.4  # Parameter for NLM filter, higher means more smoothing
-    patch_size = 4  # Size of patches used for NLM filter
-    patch_distance = 20  # Maximum distance to search patches for NLM filter
-    test_index = 80  # Example index to test a specific slice before processing the entire volume
+    data_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0.TIFF"
+    h = 1.9  # Parameter for NLM filter, higher means more smoothing
+    patch_size = 14  # Size of patches used for NLM filter
+    patch_distance = 16  # Maximum distance to search patches for NLM filter
+    test_index = 250  # Example index to test a specific slice before processing the entire volume
 
     # Step 1: Read the 3D image stack
     image_stack = tifffile.imread(data_path)

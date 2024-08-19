@@ -65,16 +65,16 @@ def nlm_filter_3d_image_stack(image_stack, ground_truth, h, patch_size_range, pa
 
 if __name__ == "__main__":
     # Define input parameters and paths
-    data_path = r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1.TIFF"
-    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\droso-results\droso_good_avg_40-offset-2.TIFF"
-    test_index = 80  # Example index to test a specific slice
+    data_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0.TIFF"
+    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\MouseEmbryo20230602LogScaleMouse_embyo_10hour-average-20.TIFF"
+    test_index = 250  # Example index to test a specific slice
     
     # Constant h value
     h = 1.4
     
     # Ranges and step sizes for parameters
-    patch_size_range = np.arange(2, 21, 2)
-    patch_distance_range = np.arange(2, 21, 2)
+    patch_size_range = np.arange(2, 15, 2)
+    patch_distance_range = np.arange(50, 71, 4)
     
     # Step 1: Read the 3D image stack and the ground truth
     image_stack = tifffile.imread(data_path)

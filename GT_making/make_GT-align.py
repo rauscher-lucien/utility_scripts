@@ -2,6 +2,8 @@ import os
 import numpy as np
 import tifffile
 import re
+from skimage import transform
+from skimage.registration import phase_cross_correlation
 
 # Natural sorting key function that converts numeric parts to integers
 def natural_sort_key(filename):
@@ -18,6 +20,19 @@ def read_tiff_stack(folder_path, num_stacks):
         img = tifffile.imread(os.path.join(folder_path, filename)).astype(np.uint16)
         tiff_stack.append(img)
     return np.array(tiff_stack)
+
+# Function to align a stack of TIFF images using the first image as the reference
+def align_tiff_stack(tiff_stack):
+    reference_image = tiff_stack[0]
+    aligned_stack = [reference_image]  # Start with the reference image
+    
+    for i in range(1, len(tiff_stack)):
+        shift, error, diffphase = phase_cross_correlation(reference_image, tiff_stack[i], upsample_factor=10)
+        print(f"Image {i} shift: {shift}")
+        aligned_image = transform.warp(tiff_stack[i], transform.AffineTransform(translation=-shift))
+        aligned_stack.append(aligned_image.astype(np.uint16))
+    
+    return np.array(aligned_stack)
 
 # Function to compute the average of TIFF stacks
 def compute_average(tiff_stacks):
@@ -39,13 +54,13 @@ def construct_output_path(output_folder, input_folder, num_stacks):
 
 if __name__ == '__main__':
     # Path to the folder containing TIFF stacks
-    input_folder = r"C:\Users\rausc\Documents\EMBL\data\big_data\Drosophila20210316LogScale01L_Good_Sample_02_t_"
+    input_folder = r"C:\Users\rausc\Documents\EMBL\data\big_data\MouseEmbryo20230602LogScaleMouse_embyo_10hour"
     
-    # Number of stacks to read a9 average
-    num_stacks = 100
+    # Number of stacks to read and average
+    num_stacks = 10
 
     # Path to the output folder
-    output_folder = r"C:\Users\rausc\Documents\EMBL\data\droso-results"
+    output_folder = r"C:\Users\rausc\Documents\EMBL\data\test"
 
     # Construct the output path based on the specified output folder, input folder, and number of stacks
     output_tiff_path = construct_output_path(output_folder, input_folder, num_stacks)
@@ -53,12 +68,14 @@ if __name__ == '__main__':
     # Read the first num_stacks TIFF stacks from the folder
     tiff_stacks = read_tiff_stack(input_folder, num_stacks)
 
-    # Compute the average of the TIFF stacks
-    average_image = compute_average(tiff_stacks)
+    # Align the TIFF stacks
+    aligned_stacks = align_tiff_stack(tiff_stacks)
+
+    # Compute the average of the aligned TIFF stacks
+    average_image = compute_average(aligned_stacks)
 
     # Write the average TIFF stack to a file
     write_average_tiff(average_image, output_tiff_path)
 
     print("Average TIFF stack created successfully.")
     print(f"Output saved to: {output_tiff_path}")
-

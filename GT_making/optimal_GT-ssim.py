@@ -98,11 +98,11 @@ def main(input_folder, denoised_stack_path, max_stacks, output_dir, base_filenam
     print(f"SSIM plot saved to {plot_filename}")
 
 if __name__ == "__main__":
-    input_folder = r"C:\Users\rausc\Documents\EMBL\data\big_data\Drosophila20210316LogScale01L_Good_Sample_02_t_"
-    denoised_stack_path = r"C:\Users\rausc\Documents\EMBL\data\droso-results\Good_Sample_02_t_1.TIFF"
+    input_folder = r"C:\Users\rausc\Documents\EMBL\data\big_data\MouseEmbryo20230602LogScaleMouse_embyo_10hour"
+    denoised_stack_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour_V0_filtered_gaussian_5.TIFF"
     max_stacks = 100  # Specify the maximum number of stacks to average
-    output_dir = r"C:\Users\rausc\Documents\EMBL\data\droso-results"
-    base_filename = 'optimal_GT-droso-ssim-compared_to_1-1'  # Specify the base filename for the output files
+    output_dir = r"C:\Users\rausc\Documents\EMBL\data\mouse-results"
+    base_filename = 'optimal_GT-mouse-ssim-compared_to_G_5-1'  # Specify the base filename for the output files
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)

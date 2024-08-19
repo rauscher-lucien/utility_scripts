@@ -71,7 +71,7 @@ def plot_psnr_scores_boxplot_with_half_box_and_scatter(all_psnr_scores, labels, 
 if __name__ == "__main__":
     output_dir = r"C:\Users\rausc\Documents\EMBL\data\general-results"
     ground_truth_paths = [
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\nema_avg_40.TIFF",
+        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B-average-100.TIFF",
         r"C:\Users\rausc\Documents\EMBL\data\droso-results\droso_good_avg_40-offset-2.TIFF",
         r"C:\Users\rausc\Documents\EMBL\data\mouse-results\Mouse_embyo_10hour-average-10.TIFF"
         # Add more ground truth file paths as needed

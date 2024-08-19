@@ -3,7 +3,7 @@ import tifffile
 import numpy as np
 
 # Load the TIFF stack
-file_path = r"C:\Users\rausc\Documents\EMBL\data\test\output_stack-Nema_B-test_3-Nematostella_B-epoch501.TIFF"
+file_path = r"C:\Users\rausc\Documents\EMBL\data\Plankton20230712LogScaleDiatom_Ciliate_A\Diatom_Ciliate_A_T0.TIFF"
 image_stack = tifffile.imread(file_path).squeeze()
 
 # Create a Napari viewer

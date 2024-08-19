@@ -56,8 +56,12 @@ def filter_outliers(ssim_scores, sensitivity=1.5):
     filtered_scores = [score for score in ssim_scores if lower_bound <= score <= upper_bound]
     return filtered_scores
 
-def plot_ssim_scores_boxplot_with_half_box_and_scatter(all_ssim_scores, labels, output_dir, sensitivity=1.5):
+def plot_ssim_scores_boxplot_with_half_box_and_scatter(all_ssim_scores, labels, output_dir, plot_filename, sensitivity=1.5, dpi=100, font_size=12, line_thickness=1.5):
     plt.figure(figsize=(15, 10))
+
+    # Define the custom blue color
+    blue_color = (0/255, 101/255, 189/255)
+    black_color = 'black'
     
     positions = np.arange(len(all_ssim_scores))
     
@@ -65,24 +69,31 @@ def plot_ssim_scores_boxplot_with_half_box_and_scatter(all_ssim_scores, labels, 
     for i, ssim_scores in enumerate(all_ssim_scores):
         filtered_scores = filter_outliers(ssim_scores, sensitivity)
         box = plt.boxplot(filtered_scores, positions=[positions[i] - 0.2], widths=0.4, patch_artist=True, 
-                          manage_ticks=False)
-        for patch in box['boxes']:
-            patch.set_facecolor('lightblue')
+                          manage_ticks=False, 
+                          boxprops=dict(linewidth=line_thickness, facecolor=blue_color),
+                          medianprops=dict(linewidth=line_thickness, color=black_color),
+                          whiskerprops=dict(linewidth=line_thickness, color=black_color),
+                          capprops=dict(linewidth=line_thickness, color=black_color),
+                          flierprops=dict(markeredgewidth=line_thickness, color=blue_color))
 
     # Overlay the scatter plot with jitter
     for i, ssim_scores in enumerate(all_ssim_scores):
         filtered_scores = filter_outliers(ssim_scores, sensitivity)
         jittered_x = np.random.normal(positions[i] + 0.2, 0.04, size=len(filtered_scores))
-        plt.scatter(jittered_x, filtered_scores, alpha=0.5, color='red')
+        plt.scatter(jittered_x, filtered_scores, alpha=0.5, color=blue_color, s=60, zorder=2)
 
-    plt.xticks(ticks=positions, labels=labels)
-    plt.title('SSIM Scores Box Plot with Scatter for Different Denoised Images')
-    plt.ylabel('SSIM Score')
-    plt.grid(True)
+    plt.xticks(ticks=positions, labels=labels, fontsize=font_size)
+    plt.yticks(fontsize=font_size)
+    plt.ylabel('SSIM Score', fontsize=font_size)
+    plt.grid(True, linewidth=line_thickness, zorder=1)
     
-    plot_filename = 'ssim_scores-nema-2D-single-1.png'
+    # Set the thickness of the plot spines
+    ax = plt.gca()
+    for spine in ax.spines.values():
+        spine.set_linewidth(line_thickness)
+
     plot_path = os.path.join(output_dir, plot_filename)
-    plt.savefig(plot_path, bbox_inches='tight')
+    plt.savefig(plot_path, bbox_inches='tight', dpi=dpi)
     plt.close()
     print(f"SSIM scores box plot with scatter saved to {plot_path}")
     
@@ -102,45 +113,20 @@ def plot_ssim_scores_boxplot_with_half_box_and_scatter(all_ssim_scores, labels, 
     print(f"Mean SSIM and standard deviation details saved to {text_path}")
 
 if __name__ == "__main__":
-    output_dir = r"C:\Users\rausc\Documents\EMBL\data\nema-results"
-    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B-average-100.TIFF"
+    output_dir = r"C:\Users\rausc\Documents\EMBL\data\mouse-results"
+    plot_filename = 'ssim_scores-comp-single-1.png'
+    ground_truth_path = r"C:\Users\rausc\Documents\EMBL\data\mouse-results\MouseEmbryo20230602LogScaleMouse_embyo_10hour-average-20.TIFF"
     denoised_files = [
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results\Nematostella_B_V0_filtered.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet3_UNet_base4_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch8290.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet3_UNet_base8_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch9000.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet3_UNet_base16_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch14620.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet3_UNet_base32_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch70980.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet3_UNet_base64_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch99970.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet4_UNet_base4_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch5680.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet4_UNet_base8_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch27050.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet4_UNet_base16_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch21330.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet4_UNet_base32_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch20230.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet4_UNet_base64_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch98420.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet5_UNet_base4_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch14360.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet5_UNet_base8_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch10090.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet5_UNet_base16_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch8030.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet5_UNet_base32_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch2050.TIFF",
-        r"C:\Users\rausc\Documents\EMBL\data\nema-results-2D-N2N-single\2D-N2N-single_volume_output_stack-Nematostella_B-project-test_3_nema_model_nameUNet5_UNet_base64_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch62710.TIFF"
+        r"\\?\UNC\tier2.embl.de\prevedel\members\Rauscher\final_projects\2D-N2N-single_volume\test_3_nema_model_nameUNet4_UNet_base32_num_epoch100000_batch_size8_lr1e-05_patience5000\results\mouse\2D-N2N-single_volume_output_stack-mouse-project-test_3_nema_model_nameUNet4_UNet_base32_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch20230.TIFF",
+        r"\\?\UNC\tier2.embl.de\prevedel\members\Rauscher\final_projects\2D-N2N-single_volume\test_1_droso_model_nameUNet4_UNet_base32_num_epoch100000_batch_size8_lr1e-05_patience5000\results\mouse\2D-N2N-single_volume_output_stack-mouse-project-test_1_droso_model_nameUNet4_UNet_base32_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch97550.TIFF",
+        r"\\?\UNC\tier2.embl.de\prevedel\members\Rauscher\final_projects\2D-N2N-single_volume\test_1_mouse_model_nameUNet4_UNet_base32_num_epoch100000_batch_size8_lr1e-05_patience5000\results\mouse\2D-N2N-single_volume_output_stack-mouse-project-test_1_mouse_model_nameUNet4_UNet_base32_num_epoch100000_batch_size8_lr1e-05_patience5000-epoch36420.TIFF"
         # Add more file paths as needed
     ]
     
     custom_labels = [
-        "bm3d",
-        "3 4",
-        "3 8",
-        "3 16",
-        "3 32",
-        "3 64",
-        "4 4",
-        "4 8",
-        "4 16",
-        "4 32",
-        "4 64",
-        "5 4",
-        "5 8",
-        "5 16",
-        "5 32",
-        "5 64"
+        "mouse trained on nema",
+        "mouse trained on droso",
+        "mouse trained on mouse"
         # Add more custom labels as needed
     ]
 
@@ -154,4 +140,8 @@ if __name__ == "__main__":
         all_ssim_scores.append(ssim_scores)
 
     sensitivity = 1.5  # Adjust this value to change the outlier sensitivity
-    plot_ssim_scores_boxplot_with_half_box_and_scatter(all_ssim_scores, custom_labels, output_dir, sensitivity)
+    dpi = 300  # Adjust the DPI value as needed
+    font_size = 28  # Adjust the font size as needed
+    line_thickness = 3  # Adjust the line thickness as needed
+    plot_ssim_scores_boxplot_with_half_box_and_scatter(all_ssim_scores, custom_labels, output_dir, plot_filename, sensitivity, dpi, font_size, line_thickness)
+
